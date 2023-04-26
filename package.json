@@ -1,5 +1,6 @@
 {
   "name": "react-test",
+  "homepage": "http://react.giringrim.co.kr",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
