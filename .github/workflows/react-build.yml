@@ -1,0 +1,39 @@
+name: React build
+on: 
+  push:                               # main Branch에서 push 이벤트가 일어났을 때만 실행
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest            #centOS에서의 작동 유무 궁금
+    
+    env:
+      CI: false                       # 빌드과정에서 warning도 error 취급 될수 있으므로 이를 원하지 않을 경우 false를 넣어준다
+    strategy:
+      matrix:
+        node-version: [16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        
+    steps:
+      - name: Checkout source code.   # 레포지토리 체크아웃
+        uses: actions/checkout@v3
+        
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - name: Build Project           # React 빌드
+        run: npm run build
+
+      - name: React build outputs      # 배포
+        uses: appleboy/scp-action@main
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          source: 'build/*'
+          target: '/home/httpd/pubtest/react-test'
