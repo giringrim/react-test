@@ -39,11 +39,12 @@ jobs:
       - name: SFTP uploader            # remote 서버에 배포를 위한 라인 (Marketplace 에 올라와 있는 이미 작성된 action들을 복사해서 사용하는 라인임)
         uses: wangyucode/sftp-upload-action@v2.0.2
         with:
-          host: ${{ secrets.HOST_DOMAIN_WITHOUT_PROTOCOL }}                  # Recommended to put the credentials in github secrets.
+          host: 'react.giringrim.co.kr'                  # Recommended to put the credentials in github secrets.
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.SFTP_PORT }}
+          compress: true                             # Compression
           forceUpload: true                               # Optional, Force uploading all files, Default to false(upload only newer files).
           localDir: 'build'                               # Required, Absolute or relative to cwd.
-          remoteDir: '/home/httpd/pubtest/react-test/'    # Required, Absolute path only.
+          remoteDir: '/'    # Required, Absolute path only.
           exclude: '.git*,.node_modules'                  # Optional. exclude patterns (glob) like .gitignore, use ',' to split, Default to ''.
