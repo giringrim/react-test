@@ -1,12 +1,13 @@
 name: React build
 on: 
+  workflow_dispatch:                  # 수동 배포를 하기 위한 이벤트 (github의 Run Workflow 버튼을 통해 수동으로 Workflow 를 실행 할 수 있음)
   push:                               # main Branch에서 push 이벤트가 일어났을 때만 실행
     branches:
       - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest            #centOS에서의 작동 유무 궁금
+  build:                              # job(처리 업무) 이름임. 마음대로 지으면 됨
+    runs-on: ubuntu-latest            # Github Action 이 가동되면 이게 도커 컨테이너에서 돌아가는거라 dockerfile 에 FROM (기반 이미지)이 존재하는것처럼 여기서도 비슷한 개념 (centOS에서의 작동 유무 궁금)
     
     env:
       CI: false                       # 빌드과정에서 warning도 error 취급 될수 있으므로 이를 원하지 않을 경우 false를 넣어준다
@@ -15,25 +16,34 @@ jobs:
         node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         
+    name: Build                       # 마음대로 지으면 됨 (없어도됨)
     steps:
       - name: Checkout source code.   # 레포지토리 체크아웃
-        uses: actions/checkout@v3
+        uses: actions/checkout@main   # main 브랜치의 코드를 가져온다
         
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - name: Cache node modules      # 무거운 node_modules 폴더를 캐싱해주기
+        uses: actions/cache@v1
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-
+          path: node_modules          # node_modules 폴더를 캐싱한다 (node_modules를 저장했다 불러옴)
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}  # runner.OS는 가상환경을 의미하며 여기서는 Linux를 의미, package-lock.json 파일을 해시화.
+          restore-keys: |             # 만약 key 값이 없으면 그 이전에 캐시했던 폴더중 가장 최근의 key 값을 가져온다
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+        
+      - name: Install Dependencies    # 의존 파일(패키지) 설치
+        run: npm install
+            
       - name: Build Project           # React 빌드
         run: npm run build
 
-      - name: React build outputs      # 배포
-        uses: appleboy/scp-action@main
+      - name: SFTP uploader            # remote 서버에 배포를 위한 라인 (Marketplace 에 올라와 있는 이미 작성된 action들을 복사해서 사용하는 라인임)
+        uses: wangyucode/sftp-upload-action@v2.0.2
         with:
-          host: ${{ secrets.HOST }}
+          host: ${{ secrets.HOST_DOMAIN_WITHOUT_PROTOCOL }}                  # Recommended to put the credentials in github secrets.
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          source: 'build/*'
-          target: '/home/httpd/pubtest/react-test'
+          port: ${{ secrets.SFTP_PORT }}
+          forceUpload: true                               # Optional, Force uploading all files, Default to false(upload only newer files).
+          localDir: 'build'                               # Required, Absolute or relative to cwd.
+          remoteDir: '/home/httpd/pubtest/react-test/'    # Required, Absolute path only.
+          exclude: '.git*,.node_modules'                  # Optional. exclude patterns (glob) like .gitignore, use ',' to split, Default to ''.
