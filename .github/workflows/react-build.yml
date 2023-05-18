@@ -43,7 +43,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          protocol: ftps
+          protocol: sftp
           local-dir: ./build/
           server-dir: home/httpd/pubtest/react-test/build/
           timeout: 60000
