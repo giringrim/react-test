@@ -43,5 +43,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.SFTP_PORT }}
+          protocol: ftps
           local-dir: ./build/
+          server-dir: /home/httpd/pubtest/react-test/
+          protocol: 60000
 
