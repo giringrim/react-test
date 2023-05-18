@@ -36,15 +36,15 @@ jobs:
       - name: Build Project           # React 빌드
         run: npm run build
 
-      - name: Deploy # remote 서버에 배포를 위한 라인 (Marketplace 에 올라와 있는 이미 작성된 action들을 복사해서 사용하는 라인임)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: SFTP uploader            # remote 서버에 배포를 위한 라인 (Marketplace 에 올라와 있는 이미 작성된 action들을 복사해서 사용하는 라인임)
+        uses: wangyucode/sftp-upload-action@v2.0.2
         with:
-          server: ${{ secrets.HOST_IP_146 }}
+          host: ${{ secrets.HOST_IP_146 }}                  # Recommended to put the credentials in github secrets.
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          protocol: sftp
-          local-dir: ./build/
-          server-dir: home/httpd/pubtest/react-test/build/
-          timeout: 60000
-
+          port: ${{ secrets.SFTP_PORT }}
+          compress: true                                  # Compression
+          forceUpload: true                               # Optional, Force uploading all files, Default to false(upload only newer files).
+          localDir: './build'                             # Required, Absolute or relative to cwd.
+          remoteDir: '/home/httpd/pubtest/react-test/'    # Required, Absolute path only.
+          exclude: '.git*,.node_modules'                  # Optional. exclude patterns (glob) like .gitignore, use ',' to split, Default to ''.
