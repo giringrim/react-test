@@ -45,6 +45,6 @@ jobs:
           port: ${{ secrets.PORT }}
           protocol: ftps
           local-dir: ./build/
-          server-dir: /home/httpd/pubtest/react-test/
+          server-dir: home/httpd/pubtest/react-test/build/
           timeout: 60000
 
