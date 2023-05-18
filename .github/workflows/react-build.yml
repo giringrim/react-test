@@ -42,7 +42,7 @@ jobs:
           server: ${{ secrets.HOST_IP_146 }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.SFTP_PORT }}
+          port: ${{ secrets.PORT }}
           protocol: ftps
           local-dir: ./build/
           server-dir: /home/httpd/pubtest/react-test/
