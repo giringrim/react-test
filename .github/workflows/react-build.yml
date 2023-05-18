@@ -13,7 +13,7 @@ jobs:
       CI: false                       # 빌드과정에서 warning도 error 취급 될수 있으므로 이를 원하지 않을 경우 false를 넣어준다
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [16.x, 12.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         
     name: Build                       # 마음대로 지으면 됨 (없어도됨)
