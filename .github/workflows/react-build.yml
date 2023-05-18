@@ -44,7 +44,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.SFTP_PORT }}
           compress: true                                       # Compression
-          forceUpload: true                                    # Optional, Force uploading all files, Default to false(upload only newer files).
+          forceUpload: false                                   # Optional, Force uploading all files, Default to false(upload only newer files).
           localDir: './build'                                  # Required, Absolute or relative to cwd.
           remoteDir: '/home/httpd/pubtest/react-test/build'    # Required, Absolute path only.
           exclude: 'node_modules/,**/*.spec.ts,.git*'          # Optional. exclude patterns (glob) like .gitignore, use ',' to split, Default to ''.
