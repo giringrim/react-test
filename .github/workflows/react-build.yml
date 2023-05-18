@@ -46,5 +46,5 @@ jobs:
           protocol: ftps
           local-dir: ./build/
           server-dir: /home/httpd/pubtest/react-test/
-          protocol: 60000
+          timeout: 60000
 
