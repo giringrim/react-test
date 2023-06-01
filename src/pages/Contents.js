@@ -10,21 +10,12 @@ export default function Contents() {
         phase_num = phase === undefined ? 0 : Number(phase),
         item = datas[phase_num];
 
-        console.log(item)
+        console.log(prams.phase)
 
-    if(item){
-        return (
-            <div className={"test"}>
-                <Products>{item}</Products>
-                <Link to="/" >← Back to home</Link>
-            </div>
-        );
-    }else{
-        return (
-            <>
-                <NotFound />
-            </>
-        );
-    }
-
+    return (
+        <div className={"test"}>
+            <Products>{item}</Products>
+            <Link to="/" >← Back to home</Link>
+        </div>
+    );
 }
