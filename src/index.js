@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Routes>
         <Route path="/" element={<App />} />
         <Route path="contents/:phase" element={<Contents />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/*" element={<NotFound />} />
     </Routes>
   </BrowserRouter>,
 );
