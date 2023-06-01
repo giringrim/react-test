@@ -1,7 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import Products from "../components/Products";
 import { getDatas } from "../datas/product";
-import NotFound from "./NotFound";
 
 export default function Contents() {
     let prams = useParams(),
