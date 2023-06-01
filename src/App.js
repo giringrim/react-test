@@ -1,23 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import { Link } from 'react-router-dom';
+import { getDatas } from './datas/product';
+import Header from './components/Header';
 
 function App() {
+  const datas = getDatas();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          퍼블수정20230523 테스트 입니다. Edit <code>src/App.js</code> and save to reload. v.230525
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org/main"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Reacts
-        </a>
-      </header>
+    <div className='wrap'>
+        <Header />
+        <ul className='snb'>
+        {
+          datas.map((item, idx) => (
+            <li key={idx}>
+              <Link to={`/contents/${idx}`}>{item.name}</Link>
+            </li>
+            ))
+        }
+        <li>
+          <Link to={`/contents/4`}>데이터가 없는 링크</Link>
+        </li>
+        </ul> 
     </div>
   );
 }

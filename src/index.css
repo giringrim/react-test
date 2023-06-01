@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#root{
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+ul, li{list-style: none; margin: 0; padding:0;}
+a{text-decoration:none; color: inherit;}
+a:hover{text-decoration:underline; color: #4e66e9; text-decoration-thickness: 1px; text-underline-offset: 0.25em;}
+.snb li::before{content:'- ';}
