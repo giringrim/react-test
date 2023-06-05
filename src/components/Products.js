@@ -1,6 +1,6 @@
 
 export default function Products(props) {
-	let item = props.children;
+	const item = props.children;
 	return (
 		<>
 			{ 

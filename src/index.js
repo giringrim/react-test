@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="contents/:phase" element={<Contents />} />
         <Route path="/*" element={<NotFound />} />
     </Routes>
-  </BrowserRouter>,
+  </BrowserRouter>
 );
 
 
